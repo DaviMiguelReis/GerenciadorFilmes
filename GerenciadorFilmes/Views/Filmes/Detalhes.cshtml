@@ -1,0 +1,58 @@
+﻿@model GerenciadorFilmes.Models.Filmes
+
+@{
+    ViewData["Title"] = "Detalhes do Filme";
+}
+
+<div class="page-heading">
+    <div>
+        <h1>Detalhes do Projeto</h1>
+        <p>Visualize as informações do projeto acadêmico.</p>
+    </div>
+
+    <div>
+        <a asp-action="Editar"
+           asp-route-id="@Model.Id"
+           class="button">
+            Editar
+        </a>
+
+        <a asp-action="Index"
+           class="button secondary">
+            Voltar
+        </a>
+    </div>
+</div>
+
+<div class="details">
+
+    <div class="detail-item">
+        <strong>Título</strong>
+        <p>@Model.Titulo</p>
+    </div>
+
+    <div class="detail-item">
+        <strong>Ano Lançamento</strong>
+        <p>@Model.AnoLancamento</p>
+    </div>
+
+    <div class="detail-item">
+        <strong>Duração</strong>
+        <p>@Model.DuracaoMinutos horas</p>
+    </div>
+
+    <div class="detail-item">
+        <strong>Gênero</strong>
+        <p>
+            @if (Model.Genero is not null)
+            {
+                @Model.Genero.Nome
+            }
+            else
+            {
+                <span>Genero não informado</span>
+            }
+        </p>
+    </div>
+
+</div>

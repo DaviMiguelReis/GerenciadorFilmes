@@ -1,0 +1,21 @@
+﻿@model GerenciadorFilmes.Models.Filmes
+
+@{
+    ViewData["Title"] = "Excluir projeto";
+}
+
+<h1>Excluir projeto</h1>
+
+<div class="alert alert-warning">
+    Tem certeza de que deseja excluir este projeto?
+</div>
+
+<p><strong>@Model.Titulo</strong></p>
+<p>@Model.AnoLancamento</p>
+
+<form asp-action="Excluir" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <button type="submit" class="btn btn-danger">Confirmar exclusão</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
