@@ -1,7 +1,7 @@
 ﻿@model GerenciadorFilmes.ViewModels.FilmesIndexViewModels
 
 @{
-    ViewData["Title"] = "Projetos Acadêmicos";
+    ViewData["Title"] = "Filmes Acadêmicos";
 }
 
 <div class="page-heading">
@@ -50,7 +50,7 @@
     @if (string.IsNullOrWhiteSpace(Model.TextoPesquisa))
     {
         <p class="counter">
-            @Model.QuantidadeTotal projeto(s) cadastrado(s)
+            @Model.QuantidadeTotal filme(s) cadastrado(s)
         </p>
     }
     else
