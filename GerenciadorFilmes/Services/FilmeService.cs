@@ -81,7 +81,7 @@ namespace GerenciadorFilmes.Services
 
         public void Adicionar(NovoFilmeViewModel vm)
         {
-            var professor = _generos.FirstOrDefault(p => p.Id == vm.GeneroId);
+            var genero = _generos.FirstOrDefault(p => p.Id == vm.GeneroId);
 
             var novoFilme = new Filmes
             {
@@ -90,7 +90,7 @@ namespace GerenciadorFilmes.Services
                 DuracaoMinutos = vm.DuracaoMinutos,
                 AnoLancamento = vm.AnoLancamento,
                 GeneroId = vm.GeneroId!.Value,
-                Genero = professor
+                Genero = genero
             };
 
             _filmes.Add(novoFilme);
@@ -98,35 +98,35 @@ namespace GerenciadorFilmes.Services
 
         public bool Atualizar(EditarFilmeViewModel model)
         {
-            var projeto = ObterPorId(model.Id);
+            var filme = ObterPorId(model.Id);
 
-            if (projeto is null)
+            if (filme is null)
                 return false;
 
             var professor = _generos.FirstOrDefault(p => p.Id == model.GeneroId);
 
-            projeto.Titulo = model.Titulo;
-            projeto.DuracaoMinutos = model.DuracaoMinutos;
-            projeto.AnoLancamento = model.AnoLancamento;
-            projeto.GeneroId = model.GeneroId!.Value;
-            projeto.Genero = professor;
+            filme.Titulo = model.Titulo;
+            filme.DuracaoMinutos = model.DuracaoMinutos;
+            filme.AnoLancamento = model.AnoLancamento;
+            filme.GeneroId = model.GeneroId!.Value;
+            filme.Genero = professor;
 
             return true;
         }
 
         public bool Remover(int id)
         {
-            var projeto = ObterPorId(id);
+            var filme = ObterPorId(id);
 
-            if (projeto is null)
+            if (filme is null)
                 return false;
 
-            _filmes.Remove(projeto);
+            _filmes.Remove(filme);
             return true;
         }
         private int GerarNovoId()
         {
-            return _filmes.Count == 0 ? 1 : _filmes.Max(projeto => projeto.Id) + 1;
+            return _filmes.Count == 0 ? 1 : _filmes.Max(filme => filme.Id) + 1;
         }
 
 
@@ -137,17 +137,17 @@ namespace GerenciadorFilmes.Services
                 return Listar();
 
             return _filmes
-                .Where(projeto => projeto.Titulo.Contains(titulo, StringComparison.CurrentCultureIgnoreCase))
+                .Where(filme => filme.Titulo.Contains(titulo, StringComparison.CurrentCultureIgnoreCase))
                 .ToList();
         }
 
-        public List<Filmes> Ordenar(IEnumerable<Filmes> projetos, string? ordenarPor)
+        public List<Filmes> Ordenar(IEnumerable<Filmes> filmes, string? ordenarPor)
         {
             return ordenarPor?.ToLowerInvariant() switch
             {
-                "titulo" => projetos.OrderBy(projeto => projeto.Titulo).ToList(),
-                "AnoLacamento" => projetos.OrderBy(projeto => projeto.AnoLancamento).ToList(),
-                _ => projetos.ToList()
+                "titulo" => filmes.OrderBy(filme => filme.Titulo).ToList(),
+                "AnoLacamento" => filmes.OrderBy(filme => filme.AnoLancamento).ToList(),
+                _ => filmes.ToList()
             };
         }
 
@@ -156,16 +156,16 @@ namespace GerenciadorFilmes.Services
             return _generos;
         }
 
-        private Genero? ObterGeneroPorId(int professorId)
+        private Genero? ObterGeneroPorId(int generoId)
         {
-            return _generos.FirstOrDefault(p => p.Id == professorId);
+            return _generos.FirstOrDefault(p => p.Id == generoId);
         }
 
-        private Filmes VincularGenero(Filmes projeto)
+        private Filmes VincularGenero(Filmes filme)
         {
-            projeto.Genero = ObterGeneroPorId(projeto.GeneroId);
+            filme.Genero = ObterGeneroPorId(filme.GeneroId);
 
-            return projeto;
+            return filme;
         }
     }
 }

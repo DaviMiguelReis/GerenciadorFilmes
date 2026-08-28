@@ -78,8 +78,8 @@
 
     <a asp-action="Index"
        asp-route-pesquisa="@Model.TextoPesquisa"
-       asp-route-ordenarPor="cargaHoraria"
-       class="@(Model.OrdenarPor == "cargaHoraria" ? "active" : null)">
+       asp-route-ordenarPor="Ano Lanaçamento"
+       class="@(Model.OrdenarPor == "AnoLancamento" ? "active" : null)">
         Ano
     </a>
 
@@ -100,13 +100,13 @@
         @if (string.IsNullOrWhiteSpace(Model.TextoPesquisa))
         {
             <text>
-                Nenhum projeto cadastrado.
+                Nenhum filme cadastrado.
             </text>
         }
         else
         {
             <text>
-                Nenhum projeto encontrado para
+                Nenhum filme encontrado para
                 "@Model.TextoPesquisa".
             </text>
         }
@@ -120,44 +120,44 @@ else
         <thead>
             <tr>
                 <th>Título</th>
-                <th>Professor</th>
-                <th>Carga horária</th>
+                <th>Gênero</th>
+                <th>Ano Lançamento</th>
                 <th>Ações</th>
             </tr>
         </thead>
 
         <tbody>
 
-            @foreach (var projeto in Model.filmes)
+            @foreach (var filme in Model.filmes)
             {
                 <tr>
 
                     <td>
-                        @projeto.Titulo
+                        @filme.Titulo
                     </td>
 
                     <td>
-                        @projeto.Genero?.Nome
+                        @filme.Genero?.Nome
                     </td>
 
                     <td>
-                        @projeto.AnoLancamento 
+                        @filme.AnoLancamento 
                     </td>
 
                     <td class="actions">
 
                         <a asp-action="Detalhes"
-                           asp-route-id="@projeto.Id">
+                           asp-route-id="@filme.Id">
                             Detalhes
                         </a>
 
                         <a asp-action="Editar"
-                           asp-route-id="@projeto.Id">
+                           asp-route-id="@filme.Id">
                             Editar
                         </a>
 
                         <a asp-action="Excluir"
-                           asp-route-id="@projeto.Id"
+                           asp-route-id="@filme.Id"
                            class="danger-link">
                             Excluir
                         </a>
