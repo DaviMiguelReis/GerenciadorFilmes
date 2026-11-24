@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-
 namespace GerenciadorFilmes.ViewModels
 {
     public class FilmeFormularioViewModel
@@ -12,7 +11,8 @@ namespace GerenciadorFilmes.ViewModels
         public string Titulo { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Informe a duração do filme.")]
-        [Display(Name = "Duracao")]
+        [Range(1895, 2049, ErrorMessage = "Informe a duração.")]
+        [Display(Name = "Duração")]
         public int DuracaoMinutos { get; set; } 
 
         [Range(1895, 2049, ErrorMessage = "Informe o Ano de lançamento.")]

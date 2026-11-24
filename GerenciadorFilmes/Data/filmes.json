@@ -1,0 +1,352 @@
+[
+  {
+    "id": 1,
+    "titulo": "O Poderoso Chefão",
+    "duracaoMinutos": 175,
+    "AnoLancamento": 1972,
+    "GeneroId": 1
+  },
+  {
+    "id": 2,
+    "titulo": "O Senhor dos Anéis: A Sociedade do Anel",
+    "duracaoMinutos": 178,
+    "AnoLancamento": 2001,
+    "GeneroId": 2
+  },
+  {
+    "id": 3,
+    "titulo": "Matrix",
+    "duracaoMinutos": 136,
+    "AnoLancamento": 1999,
+    "GeneroId": 3
+  },
+  {
+    "id": 4,
+    "titulo": "Interestelar",
+    "duracaoMinutos": 169,
+    "AnoLancamento": 2014,
+    "GeneroId": 3
+  },
+  {
+    "id": 5,
+    "titulo": "Vingadores: Ultimato",
+    "duracaoMinutos": 181,
+    "AnoLancamento": 2019,
+    "GeneroId": 3
+  },
+  {
+    "id": 6,
+    "titulo": "Titanic",
+    "duracaoMinutos": 194,
+    "AnoLancamento": 1997,
+    "GeneroId": 4
+  },
+  {
+    "id": 7,
+    "titulo": "Forrest Gump",
+    "duracaoMinutos": 142,
+    "AnoLancamento": 1994,
+    "GeneroId": 5
+  },
+  {
+    "id": 8,
+    "titulo": "O Rei Leão",
+    "duracaoMinutos": 88,
+    "AnoLancamento": 1994,
+    "GeneroId": 6
+  },
+  {
+    "id": 9,
+    "titulo": "Toy Story",
+    "duracaoMinutos": 81,
+    "AnoLancamento": 1995,
+    "GeneroId": 6
+  },
+  {
+    "id": 10,
+    "titulo": "Jurassic Park",
+    "duracaoMinutos": 127,
+    "AnoLancamento": 1993,
+    "GeneroId": 3
+  },
+  {
+    "id": 11,
+    "titulo": "Harry Potter e a Pedra Filosofal",
+    "duracaoMinutos": 152,
+    "AnoLancamento": 2001,
+    "GeneroId": 2
+  },
+  {
+    "id": 12,
+    "titulo": "Piratas do Caribe: A Maldição do Pérola Negra",
+    "duracaoMinutos": 143,
+    "AnoLancamento": 2003,
+    "GeneroId": 7
+  },
+  {
+    "id": 13,
+    "titulo": "Gladiador",
+    "duracaoMinutos": 155,
+    "AnoLancamento": 2000,
+    "GeneroId": 7
+  },
+  {
+    "id": 14,
+    "titulo": "O Cavaleiro das Trevas",
+    "duracaoMinutos": 152,
+    "AnoLancamento": 2008,
+    "GeneroId": 7
+  },
+  {
+    "id": 15,
+    "titulo": "Homem-Aranha",
+    "duracaoMinutos": 121,
+    "AnoLancamento": 2002,
+    "GeneroId": 7
+  },
+  {
+    "id": 16,
+    "titulo": "Batman Begins",
+    "duracaoMinutos": 140,
+    "AnoLancamento": 2005,
+    "GeneroId": 7
+  },
+  {
+    "id": 17,
+    "titulo": "Os Incríveis",
+    "duracaoMinutos": 115,
+    "AnoLancamento": 2004,
+    "GeneroId": 6
+  },
+  {
+    "id": 18,
+    "titulo": "Shrek",
+    "duracaoMinutos": 90,
+    "AnoLancamento": 2001,
+    "GeneroId": 6
+  },
+  {
+    "id": 19,
+    "titulo": "A Origem",
+    "duracaoMinutos": 148,
+    "AnoLancamento": 2010,
+    "GeneroId": 3
+  },
+  {
+    "id": 20,
+    "titulo": "O Silêncio dos Inocentes",
+    "duracaoMinutos": 118,
+    "AnoLancamento": 1991,
+    "GeneroId": 8
+  },
+  {
+    "id": 21,
+    "titulo": "It: A Coisa",
+    "duracaoMinutos": 135,
+    "AnoLancamento": 2017,
+    "GeneroId": 8
+  },
+  {
+    "id": 22,
+    "titulo": "Um Lugar Silencioso",
+    "duracaoMinutos": 90,
+    "AnoLancamento": 2018,
+    "GeneroId": 8
+  },
+  {
+    "id": 23,
+    "titulo": "De Volta para o Futuro",
+    "duracaoMinutos": 116,
+    "AnoLancamento": 1985,
+    "GeneroId": 3
+  },
+  {
+    "id": 24,
+    "titulo": "E.T. - O Extraterrestre",
+    "duracaoMinutos": 115,
+    "AnoLancamento": 1982,
+    "GeneroId": 3
+  },
+  {
+    "id": 25,
+    "titulo": "Top Gun: Maverick",
+    "duracaoMinutos": 130,
+    "AnoLancamento": 2022,
+    "GeneroId": 7
+  },
+  {
+    "id": 26,
+    "titulo": "Missão: Impossível - Efeito Fallout",
+    "duracaoMinutos": 147,
+    "AnoLancamento": 2018,
+    "GeneroId": 7
+  },
+  {
+    "id": 27,
+    "titulo": "John Wick: Um Novo Dia para Matar",
+    "duracaoMinutos": 122,
+    "AnoLancamento": 2017,
+    "GeneroId": 7
+  },
+  {
+    "id": 28,
+    "titulo": "Mad Max: Estrada da Fúria",
+    "duracaoMinutos": 120,
+    "AnoLancamento": 2015,
+    "GeneroId": 7
+  },
+  {
+    "id": 29,
+    "titulo": "O Máskara",
+    "duracaoMinutos": 101,
+    "AnoLancamento": 1994,
+    "GeneroId": 9
+  },
+  {
+    "id": 30,
+    "titulo": "As Branquelas",
+    "duracaoMinutos": 109,
+    "AnoLancamento": 2004,
+    "GeneroId": 9
+  },
+  {
+    "id": 31,
+    "titulo": "Se Beber, Não Case!",
+    "duracaoMinutos": 100,
+    "AnoLancamento": 2009,
+    "GeneroId": 9
+  },
+  {
+    "id": 32,
+    "titulo": "Todo Mundo em Pânico",
+    "duracaoMinutos": 88,
+    "AnoLancamento": 2000,
+    "GeneroId": 9
+  },
+  {
+    "id": 33,
+    "titulo": "O Show de Truman",
+    "duracaoMinutos": 103,
+    "AnoLancamento": 1998,
+    "GeneroId": 5
+  },
+  {
+    "id": 34,
+    "titulo": "À Procura da Felicidade",
+    "duracaoMinutos": 117,
+    "AnoLancamento": 2006,
+    "GeneroId": 5
+  },
+  {
+    "id": 35,
+    "titulo": "Clube da Luta",
+    "duracaoMinutos": 139,
+    "AnoLancamento": 1999,
+    "GeneroId": 1
+  },
+  {
+    "id": 36,
+    "titulo": "Um Sonho de Liberdade",
+    "duracaoMinutos": 142,
+    "AnoLancamento": 1994,
+    "GeneroId": 1
+  },
+  {
+    "id": 37,
+    "titulo": "Pulp Fiction: Tempo de Violência",
+    "duracaoMinutos": 154,
+    "AnoLancamento": 1994,
+    "GeneroId": 1
+  },
+  {
+    "id": 38,
+    "titulo": "O Lobo de Wall Street",
+    "duracaoMinutos": 180,
+    "AnoLancamento": 2013,
+    "GeneroId": 1
+  },
+  {
+    "id": 39,
+    "titulo": "Homem de Ferro",
+    "duracaoMinutos": 126,
+    "AnoLancamento": 2008,
+    "GeneroId": 7
+  },
+  {
+    "id": 40,
+    "titulo": "Pantera Negra",
+    "duracaoMinutos": 134,
+    "AnoLancamento": 2018,
+    "GeneroId": 7
+  },
+  {
+    "id": 41,
+    "titulo": "Guardiões da Galáxia",
+    "duracaoMinutos": 121,
+    "AnoLancamento": 2014,
+    "GeneroId": 3
+  },
+  {
+    "id": 42,
+    "titulo": "Doutor Estranho",
+    "duracaoMinutos": 115,
+    "AnoLancamento": 2016,
+    "GeneroId": 3
+  },
+  {
+    "id": 43,
+    "titulo": "Coringa",
+    "duracaoMinutos": 122,
+    "AnoLancamento": 2019,
+    "GeneroId": 1
+  },
+  {
+    "id": 44,
+    "titulo": "O Exorcista",
+    "duracaoMinutos": 132,
+    "AnoLancamento": 1973,
+    "GeneroId": 8
+  },
+  {
+    "id": 45,
+    "titulo": "Invocação do Mal",
+    "duracaoMinutos": 112,
+    "AnoLancamento": 2013,
+    "GeneroId": 8
+  },
+  {
+    "id": 46,
+    "titulo": "A Freira",
+    "duracaoMinutos": 96,
+    "AnoLancamento": 2018,
+    "GeneroId": 8
+  },
+  {
+    "id": 47,
+    "titulo": "Frozen: Uma Aventura Congelante",
+    "duracaoMinutos": 102,
+    "AnoLancamento": 2013,
+    "GeneroId": 6
+  },
+  {
+    "id": 48,
+    "titulo": "Moana: Um Mar de Aventuras",
+    "duracaoMinutos": 107,
+    "AnoLancamento": 2016,
+    "GeneroId": 6
+  },
+  {
+    "id": 49,
+    "titulo": "Homem-Aranha no Aranhaverso",
+    "duracaoMinutos": 117,
+    "AnoLancamento": 2018,
+    "GeneroId": 6
+  },
+  {
+    "id": 50,
+    "titulo": "Oppenheimer",
+    "duracaoMinutos": 180,
+    "AnoLancamento": 2023,
+    "GeneroId": 1
+  }
+]

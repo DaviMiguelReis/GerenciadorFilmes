@@ -1,36 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using GerenciadorFilmes.Models;
 using GerenciadorFilmes.Services;
 using GerenciadorFilmes.ViewModels;
+
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GerenciadorFilmes.Controllers
 {
     public class FilmesController : Controller
     {
-        private readonly IFilmesServices _filmeService;
+        private readonly IFilmeService _filmeService;
 
-        public FilmesController(IFilmesServices filmeService)
+        public FilmesController(IFilmeService filmeService)
         {
             _filmeService = filmeService;
         }
 
-        private List<SelectListItem> ObterGeneroSelectList()
+        public async Task<IActionResult> Index(string? pesquisa, string? ordenarPor)
         {
-            return _filmeService.ListarGeneros()
-                .Select(genero => new SelectListItem
-                {
-                    Value = genero.Id.ToString(),
-                    Text = genero.Nome
-                })
-                .ToList();
-        }
-
-
-
-        public IActionResult Index(string? pesquisa, string? ordenarPor)
-        {
-            var filmes = _filmeService.PesquisarPorTitulo(pesquisa);
-
+            var filmes = await _filmeService.PesquisarPorTituloAsync(pesquisa);
             filmes = _filmeService.Ordenar(filmes, ordenarPor);
 
             var model = new FilmesIndexViewModels
@@ -44,10 +32,9 @@ namespace GerenciadorFilmes.Controllers
             return View(model);
         }
 
-
-        public IActionResult Detalhes(int id)
+        public async Task<IActionResult> Detalhes(int id)
         {
-            var filme = _filmeService.ObterPorId(id);
+            var filme = await _filmeService.ObterPorIdAsync(id);
 
             if (filme is null)
                 return NotFound();
@@ -55,46 +42,36 @@ namespace GerenciadorFilmes.Controllers
             return View(filme);
         }
 
-
-
         [HttpGet]
-        public IActionResult Cadastrar()
+        public async Task<IActionResult> Cadastrar()
         {
             var model = new NovoFilmeViewModel
             {
-                Generos = ObterGeneroSelectList()
+                Generos = await ObtersGeneroslectListAsync()
             };
 
             return View(model);
         }
 
-
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Cadastrar(NovoFilmeViewModel model)
+        public async Task<IActionResult> Cadastrar(NovoFilmeViewModel model)
         {
+            model.Generos = await ObtersGeneroslectListAsync();
+
             if (!ModelState.IsValid)
-            {
-                
-                model.Generos = ObterGeneroSelectList();
-
                 return View(model);
-            }
 
-            _filmeService.Adicionar(model);
-
+            await _filmeService.AdicionarAsync(model);
             TempData["Mensagem"] = "Filme cadastrado com sucesso!";
 
             return RedirectToAction(nameof(Index));
         }
 
-
-
         [HttpGet]
-        public IActionResult Editar(int id)
+        public async Task<IActionResult> Editar(int id)
         {
-            var filme = _filmeService.ObterPorId(id);
+            var filme = await _filmeService.ObterPorIdAsync(id);
 
             if (filme is null)
                 return NotFound();
@@ -105,46 +82,35 @@ namespace GerenciadorFilmes.Controllers
                 Titulo = filme.Titulo,
                 DuracaoMinutos = filme.DuracaoMinutos,
                 AnoLancamento = filme.AnoLancamento,
-
-             
                 GeneroId = filme.GeneroId,
-
-                
-                Generos = ObterGeneroSelectList()
+                Generos = await ObtersGeneroslectListAsync()
             };
 
             return View(model);
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Editar(EditarFilmeViewModel model)
+        public async Task<IActionResult> Editar(EditarFilmeViewModel model)
         {
+            model.Generos = await ObtersGeneroslectListAsync();
+
             if (!ModelState.IsValid)
-            {
-                
-                model.Generos = ObterGeneroSelectList();
-
                 return View(model);
-            }
 
-            var atualizado = _filmeService.Atualizar(model);
+            var atualizado = await _filmeService.AtualizarAsync(model);
 
             if (!atualizado)
                 return NotFound();
 
             TempData["Mensagem"] = "Projeto atualizado com sucesso!";
-
             return RedirectToAction(nameof(Index));
         }
 
-
-
         [HttpGet]
-        public IActionResult Excluir(int id)
+        public async Task<IActionResult> Excluir(int id)
         {
-            var filme = _filmeService.ObterPorId(id);
+            var filme = await _filmeService.ObterPorIdAsync(id);
 
             if (filme is null)
                 return NotFound();
@@ -152,20 +118,28 @@ namespace GerenciadorFilmes.Controllers
             return View(filme);
         }
 
-
-
         [HttpPost, ActionName("Excluir")]
         [ValidateAntiForgeryToken]
-        public IActionResult ConfirmarExclusao(int id)
+        public async Task<IActionResult> ConfirmarExclusao(int id)
         {
-            var removido = _filmeService.Remover(id);
+            var removido = await _filmeService.RemoverAsync(id);
 
             if (!removido)
                 return NotFound();
 
             TempData["Mensagem"] = "Projeto excluído com sucesso!";
-
             return RedirectToAction(nameof(Index));
+        }
+
+        private async Task<List<SelectListItem>> ObtersGeneroslectListAsync()
+        {
+            return (await _filmeService.ListarGenerosAsync())
+                .Select(genero => new SelectListItem
+                {
+                    Value = genero.Id.ToString(),
+                    Text = genero.Nome
+                })
+                .ToList();
         }
     }
 }

@@ -1,3 +1,4 @@
+using GerenciadorFilmes.Repositories;
 using GerenciadorFilmes.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,7 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 // Registrando nosso serviço como Singleton (uma única instância para toda a aplicação)
-builder.Services.AddSingleton<IFilmesServices, FilmeService>();
+builder.Services.AddSingleton<JsonFileStore>();
+builder.Services.AddScoped<IFilmeRepository, FilmeJsonRepository>();
+builder.Services.AddScoped<IGeneroRepository, GeneroJsonRepository>();
+builder.Services.AddScoped<IFilmeService, FilmeService>();
 
 var app = builder.Build();
 

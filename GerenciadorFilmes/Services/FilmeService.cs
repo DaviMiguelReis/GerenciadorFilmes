@@ -1,171 +1,88 @@
-﻿
-using GerenciadorFilmes.Models;
+﻿using GerenciadorFilmes.Models;
+using GerenciadorFilmes.Repositories;
 using GerenciadorFilmes.ViewModels;
-
+using static System.Net.WebRequestMethods;
 
 namespace GerenciadorFilmes.Services
 {
-    public class FilmeService : IFilmesServices
+    public class FilmeService : IFilmeService
     {
-        private readonly List<Genero> _generos =
-    [
-        new Genero
-        {
-            Id = 1,
-            Nome = "Ação",
-            
-        },
+        private readonly IFilmeRepository _filmeRepository;
+        private readonly IGeneroRepository _generoRepository;
 
-        new Genero
+        public FilmeService(IFilmeRepository filmeRepository, IGeneroRepository generoRepository)
         {
-            Id = 2,
-            Nome = "Terror",
-           
-        },
-
-        new Genero
-        {
-            Id = 3,
-            Nome = "Animação",
-           
-        }
-    ];
-
-        private readonly List<Filmes> _filmes =
-        [
-            new Filmes
-        {
-            Id = 1,
-            Titulo = "Rambo",
-            DuracaoMinutos = 100,
-            AnoLancamento = 1993,
-            GeneroId = 1
-
-        },
-        new Filmes
-        {
-            Id = 2,
-            Titulo = "Vingadores",
-            DuracaoMinutos = 120,
-            AnoLancamento = 2012,
-            GeneroId = 2
-
-        },
-        new Filmes
-        {
-            Id = 3,
-            Titulo = "Homem-Aranha",
-            DuracaoMinutos = 120,
-            AnoLancamento = 2000,
-            GeneroId = 3
+            _filmeRepository = filmeRepository;
+            _generoRepository = generoRepository;
         }
 
+        public async Task<List<Genero>> ListarGenerosAsync() => await _generoRepository.ListarAsync();
 
-            ];
-        public List<Filmes> Listar()
+        public async Task<List<Filmes>> ListarAsync()
         {
-            return _filmes
-            .Select(VincularGenero)
-            .ToList();
+            var filmes = await _filmeRepository.ListarAsync();
+            return await VincularGeneroAsync(filmes);
         }
 
-        public Filmes? ObterPorId(int id)
+        public async Task<List<Filmes>> PesquisarPorTituloAsync(string? titulo)
         {
-            var filme = _filmes.FirstOrDefault(p => p.Id == id);
+            var filmes = await ListarAsync();
+            if (string.IsNullOrWhiteSpace(titulo)) return filmes;
 
-            if (filme == null)
-                return null;
-
-            return VincularGenero(filme);
+            return filmes.Where(filme => filme.Titulo.Contains(titulo, StringComparison.CurrentCultureIgnoreCase)).ToList();
         }
 
-        public void Adicionar(NovoFilmeViewModel vm)
+        public List<Filmes> Ordenar(IEnumerable<Filmes> filmes, string? ordenarPor) => ordenarPor?.ToLowerInvariant() switch
         {
-            var genero = _generos.FirstOrDefault(p => p.Id == vm.GeneroId);
+            "titulo" => filmes.OrderBy(filme => filme.Titulo).ToList(),
+            "Ano" => filmes.OrderBy(filme => filme.AnoLancamento).ToList(),
+            _ => filmes.ToList()
+        };
 
-            var novoFilme = new Filmes
-            {
-                Id = GerarNovoId(),
-                Titulo = vm.Titulo,
-                DuracaoMinutos = vm.DuracaoMinutos,
-                AnoLancamento = vm.AnoLancamento,
-                GeneroId = vm.GeneroId!.Value,
-                Genero = genero
-            };
-
-            _filmes.Add(novoFilme);
-        }
-
-        public bool Atualizar(EditarFilmeViewModel model)
+        public async Task<Filmes?> ObterPorIdAsync(int id)
         {
-            var filme = ObterPorId(model.Id);
-
-            if (filme is null)
-                return false;
-
-            var professor = _generos.FirstOrDefault(p => p.Id == model.GeneroId);
-
-            filme.Titulo = model.Titulo;
-            filme.DuracaoMinutos = model.DuracaoMinutos;
-            filme.AnoLancamento = model.AnoLancamento;
-            filme.GeneroId = model.GeneroId!.Value;
-            filme.Genero = professor;
-
-            return true;
-        }
-
-        public bool Remover(int id)
-        {
-            var filme = ObterPorId(id);
-
-            if (filme is null)
-                return false;
-
-            _filmes.Remove(filme);
-            return true;
-        }
-        private int GerarNovoId()
-        {
-            return _filmes.Count == 0 ? 1 : _filmes.Max(filme => filme.Id) + 1;
-        }
-
-
-
-        public List<Filmes> PesquisarPorTitulo(string? titulo)
-        {
-            if (string.IsNullOrWhiteSpace(titulo))
-                return Listar();
-
-            return _filmes
-                .Where(filme => filme.Titulo.Contains(titulo, StringComparison.CurrentCultureIgnoreCase))
-                .ToList();
-        }
-
-        public List<Filmes> Ordenar(IEnumerable<Filmes> filmes, string? ordenarPor)
-        {
-            return ordenarPor?.ToLowerInvariant() switch
-            {
-                "titulo" => filmes.OrderBy(filme => filme.Titulo).ToList(),
-                "AnoLacamento" => filmes.OrderBy(filme => filme.AnoLancamento).ToList(),
-                _ => filmes.ToList()
-            };
-        }
-
-        public List<Genero> ListarGeneros()
-        {
-            return _generos;
-        }
-
-        private Genero? ObterGeneroPorId(int generoId)
-        {
-            return _generos.FirstOrDefault(p => p.Id == generoId);
-        }
-
-        private Filmes VincularGenero(Filmes filme)
-        {
-            filme.Genero = ObterGeneroPorId(filme.GeneroId);
-
+            var filme = await _filmeRepository.ObterPorIdAsync(id);
+            if (filme is not null)
+                filme.Genero = await _generoRepository.ObterPorIdAsync(filme.GeneroId);
             return filme;
+        }
+
+        public async Task AdicionarAsync(NovoFilmeViewModel model)
+        {
+            if (await _generoRepository.ObterPorIdAsync(model.GeneroId.Value) is null) // 
+                throw new InvalidOperationException("O Gênero selecionado não existe.");
+
+            await _filmeRepository.AdicionarAsync(new Filmes
+            {
+                Titulo = model.Titulo,
+                DuracaoMinutos = model.DuracaoMinutos,
+                AnoLancamento = model.AnoLancamento,
+                GeneroId = model.GeneroId.Value // 
+            });
+        }
+
+        public async Task<bool> AtualizarAsync(EditarFilmeViewModel model)
+        {
+            if (await _generoRepository.ObterPorIdAsync(model.GeneroId.Value) is null) return false; //
+
+            return await _filmeRepository.AtualizarAsync(new Filmes
+            {
+                Id = model.Id,
+                Titulo = model.Titulo,
+                DuracaoMinutos = model.DuracaoMinutos,
+                AnoLancamento = model.AnoLancamento,
+                GeneroId = model.GeneroId.Value //
+            });
+        }
+
+        public Task<bool> RemoverAsync(int id) => _filmeRepository.RemoverAsync(id);
+
+        private async Task<List<Filmes>> VincularGeneroAsync(List<Filmes> filmes)
+        {
+            var generosPorId = (await _generoRepository.ListarAsync()).ToDictionary(genero => genero.Id);
+            foreach (var filme in filmes)
+                filme.Genero = generosPorId.GetValueOrDefault(filme.GeneroId);
+            return filmes;
         }
     }
 }
